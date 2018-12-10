@@ -1,0 +1,75 @@
+<!-- lavosoli  --> 
+<div id="lavosoli" class="modal">
+
+  
+  <form name="inputselector" class="modal-content animate" >
+  
+    <!--<div class="imgcontainer"> -->
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('lavosoli').style.display='none'" class="close" title="Close Modal">&times;</span>
+      
+      <!--<img src="img_avatar2.png" alt="Avatar" class="avatar">-->
+    </div>
+
+    <div class="container">
+    <p align="center">
+      <label class="farsifont">آمار وصولی و ثبت نام</label></p>
+     <p> <!--<label class="farsifont">سال صورت حساب</label> -->
+      <!--<input type="text" placeholder="سال صورت حساب را وارد کنید" name="yearinvoice" required>-->
+<select name="startdate"  class="farsifont form_field" id="yearinvoice">
+  <option value="">سال</option> 
+  <option value="92">92</option>
+  <option value="93">93</option>
+  <option value="94">94</option>
+  <option value="95">95</option>
+  <option value="96">96</option>
+</select>
+</p> 
+
+      <!--<input type="text" placeholder="سال درآمدی را وارد نمایید" name="yearpayment" required> -->
+<p>
+      <!--<label class="farsifont">دوره درآمدی</label>
+      <!--<input type="text" placeholder="دوره درآمدی را وارد نمایید" name="cyclepayment" required> -->
+<select name="enddate"  class="farsifont form_field" id="cyclepayment">
+<option value="">دوره</option>
+  <option value="01">01</option>
+  <option value="02">02</option>
+  <option value="03">03</option>
+  <option value="04">04</option>
+  <option value="05">05</option>
+  <option value="06">06</option>
+  <option value="07">07</option>
+  <option value="08">08</option>
+  <option value="09">09</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+  <option value="12">12</option>
+  </select>
+ </p> 
+ 
+ <p>
+      <!--<label class="farsifont">دوره درآمدی</label>
+      <!--<input type="text" placeholder="دوره درآمدی را وارد نمایید" name="cyclepayment" required> -->
+<select name="bank"  class="farsifont form_field" id="cyclepayment">
+<option value="">بانک</option>
+  <option value="1">ملي</option>
+  <option value="2">صادرات</option>
+  <option value="3">ملت</option>
+  <option value="4">تجارت</option>
+  <option value="5">سپه</option>
+  <option value="6">مسکن</option>
+  <option value="7">رفاه</option>
+  <option value="8">کشاورزي</option>
+  <option value="10">صنعت و معدن</option>
+  </select>
+ </p>
+          
+      <button type="submit" target="reportsPHP/tafkikvosooli.php" class="farsifont" id="continue_form">ادامه</button>
+      <!--<input type="checkbox" checked="checked"> Remember me-->
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" class="cancelbtn" id="cancel_form">Cancel</button>
+    </div>
+  </form>
+</div>
