@@ -25,19 +25,20 @@ $e = oci_error();
 
 }
 else{
+  // parameters from url
 	$fieldNames = explode('&', $_POST['fieldsNames']);
 	$fieldsValues = explode( '&', $_POST['fieldsValues']);
-	
+
 	$fields = array();
 	for( $i = 0; $i<sizeof($fieldNames); $i++){
 		$fields[$fieldNames[$i]] = $fieldsValues[$i];
 	}
-	
-	
+
+
 	$yearinvoice= $fields[ 'yearinvoice' ];
 	$yearpayment= $fields[ 'yearpayment' ];
 	$cyclepayment= $fields[ 'cyclepayment' ];
-	
+
 	$query=sprintf("select sum(D.ABON_OPEN_AMOUNT),sum(D.BIL_TOTAL_ABON),sum(D.LOCAL_OPEN_AMOUNT),sum(D.LOCAL_TOTAL_AMOUNT),sum(D.SMS_OPEN_AMOUNT),sum(D.BIL_TOTAL_SMS),sum(D.MMS_OPEN_AMOUNT),sum(D.BIL_TOTAL_MMS),sum(D.VAS_OPEN_AMOUNT),sum(d.vas_total_amount),sum(D.INTERNATIONAL_OPEN_AMOUNT),sum(D.BIL_TOTAL_INT),sum(D.INT_ROAM_OPEN_AMOUNT),sum(D.BIL_TOTAL_ROAM),sum(D.SERVICES_OPEN_AMOUNT),sum(D.BIL_TOTAL_SERVICES),sum(D.COSTS_OPEN_AMOUNT),sum(D.BIL_TOTAL_COSTS),sum(D.CHARITY_OPEN_AMOUNT),sum(D.BIL_TOTAL_CHARITY) from billuser.VOSOLI_REPORT_SUMMARY_PAYMENT d where d.PAYMENT_CYCLE='Payment_%s%s' and substr(d.BIL_CYCLE,6,2)='%s'",$yearpayment,$cyclepayment,$yearinvoice);
 	//echo $query;
 $stid=oci_parse($conn,$query);
@@ -105,7 +106,7 @@ if ($sum_total==0){
 	$rate_services_total=0;
 	$rate_costs_total=0;
 	$rate_charity_total=0;
-	
+
 }
 else {
 $rate_abon_total=$abon_total/$sum_total*100;
@@ -172,7 +173,7 @@ if ($sms_total==0) {$rate_totaltopayment_sms=0;}
 else {
 $rate_totaltopayment_sms=$payment_sms/$sms_total*100;
 }
-if ($mms_total==0){$rate_totaltopayment_mms=0;} 
+if ($mms_total==0){$rate_totaltopayment_mms=0;}
 else {
 $rate_totaltopayment_mms=$payment_mms/$mms_total*100;
 }
@@ -227,7 +228,7 @@ else {
 	$rate_opentototal_costs=$costs_open/$sum_open*100;
 	$rate_opentototal_charity=$charity_open/$sum_open*100;
 }
-	
+
 $sum_opentototal=($rate_opentototal_abon+$rate_opentototal_local+$rate_opentototal_sms+$rate_opentototal_mms+$rate_opentototal_int+$rate_opentototal_roam+$rate_opentototal_vas+$rate_opentototal_services+$rate_opentototal_costs+$rate_opentototal_charity);
 
 if ($abon_total==0){$rate_opentoinvoice_abon=0;}
@@ -294,14 +295,14 @@ $sum_avg_opentoinvoice=($rate_opentoinvoice_abon+$rate_opentoinvoice_local+$rate
 	<i class="fa fa-print toolbar_icon"></i>
 </div>
 <table  border="0" cellspacing="2" id="hor-minimalist-a" class="farsifont responstable">
-	
+
   <thead>
   <tr>
     <th colspan="9" align="center" valign="middle" >
      <?php echo sprintf("مبلغ کارکرد سرویس های مختلف در سال <strong>%s</strong> به تفکیک وصول آن تا سال <strong>%s</strong> دوره  <strong>%s</strong>",$yearinvoice,$yearpayment,$cyclepayment); ?>
 	</th>
   </tr>
-  
+
   <tr  >
     <th ><div align="center" valign="middle" >نوع سرویس</div></th>
     <th ><div align="center">مبلغ کل صدوری</div></th>
@@ -328,63 +329,63 @@ $sum_avg_opentoinvoice=($rate_opentoinvoice_abon+$rate_opentoinvoice_local+$rate
   </tr>
   <tr>
     <td align="right" valign="middle">تماس داخلی</td>
-    <td align="left" ><?php echo number_format($local_total);?></td>	
-    <td align="left" ><?php echo number_format($rate_local_total,2,".",",");?> </td>	
-    <td align="left" ><?php echo number_format($payment_local);?></td>	
-    <td align="left" ><?php echo number_format($rate_payment_local,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($rate_totaltopayment_local,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($local_open);?></td>	
-    <td align="left" ><?php echo number_format($rate_opentototal_local,2,".",",");?></td>	
+    <td align="left" ><?php echo number_format($local_total);?></td>
+    <td align="left" ><?php echo number_format($rate_local_total,2,".",",");?> </td>
+    <td align="left" ><?php echo number_format($payment_local);?></td>
+    <td align="left" ><?php echo number_format($rate_payment_local,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($rate_totaltopayment_local,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($local_open);?></td>
+    <td align="left" ><?php echo number_format($rate_opentototal_local,2,".",",");?></td>
     <td align="center" ><?php echo number_format($rate_opentoinvoice_local,2,".",",");?></td>
   </tr>
   <tr>
     <td align="right" valign="middle">پیام متنی</td>
     <td align="left" ><?php echo number_format($sms_total);?></td>
-    <td align="left" ><?php echo number_format($rate_sms_total,2,".",",");?> </td>	
-    <td align="left" ><?php echo number_format($payment_sms);?></td>	
-    <td align="left" ><?php echo number_format($rate_payment_sms,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($rate_totaltopayment_sms,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($sms_open);?></td>	
-    <td align="left" ><?php echo number_format($rate_opentototal_sms,2,".",",");?></td>	
-    <td align="center" ><?php echo number_format($rate_opentoinvoice_sms,2,".",",");?></td>	
+    <td align="left" ><?php echo number_format($rate_sms_total,2,".",",");?> </td>
+    <td align="left" ><?php echo number_format($payment_sms);?></td>
+    <td align="left" ><?php echo number_format($rate_payment_sms,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($rate_totaltopayment_sms,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($sms_open);?></td>
+    <td align="left" ><?php echo number_format($rate_opentototal_sms,2,".",",");?></td>
+    <td align="center" ><?php echo number_format($rate_opentoinvoice_sms,2,".",",");?></td>
   </tr>
   <tr>
     <td align="right" valign="middle">پیام چند رسانه ای</td>
     <td align="left" ><?php echo number_format($mms_total);?></td>
-    <td align="left" ><?php echo number_format($rate_mms_total,2,".",",");?> </td>	
-    <td align="left" ><?php echo number_format($payment_mms);?></td>	
-    <td align="left" ><?php echo number_format($rate_payment_mms,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($rate_totaltopayment_mms,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($mms_open);?></td>	
-    <td align="left" ><?php echo number_format($rate_opentototal_mms,2,".",",");?></td>	
-    <td align="center" ><?php echo number_format($rate_opentoinvoice_mms,2,".",",");?></td>	
+    <td align="left" ><?php echo number_format($rate_mms_total,2,".",",");?> </td>
+    <td align="left" ><?php echo number_format($payment_mms);?></td>
+    <td align="left" ><?php echo number_format($rate_payment_mms,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($rate_totaltopayment_mms,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($mms_open);?></td>
+    <td align="left" ><?php echo number_format($rate_opentototal_mms,2,".",",");?></td>
+    <td align="center" ><?php echo number_format($rate_opentoinvoice_mms,2,".",",");?></td>
   </tr>
   <tr>
     <td align="right" valign="middle">خدمات </td>
     <td align="left" ><?php echo number_format($services_total);?></td>
-    <td align="left" ><?php echo number_format($rate_services_total,2,".",",");?> </td>	
-    <td align="left" ><?php echo number_format($payment_services);?></td>	
-    <td align="left" ><?php echo number_format($rate_payment_services,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($rate_totaltopayment_services,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($services_open);?></td>	
-    <td align="left" ><?php echo number_format($rate_opentototal_services,2,".",",");?></td>	
+    <td align="left" ><?php echo number_format($rate_services_total,2,".",",");?> </td>
+    <td align="left" ><?php echo number_format($payment_services);?></td>
+    <td align="left" ><?php echo number_format($rate_payment_services,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($rate_totaltopayment_services,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($services_open);?></td>
+    <td align="left" ><?php echo number_format($rate_opentototal_services,2,".",",");?></td>
     <td align="center" ><?php echo number_format($rate_opentoinvoice_services,2,".",",");?></td>
   </tr>
   <tr>
     <td align="right" valign="middle">مکالمه خارجه </td>
-    <td align="left" ><?php echo number_format($int_total);?></td>	
-    <td align="left" ><?php echo number_format($rate_int_total,2,".",",");?> </td>	
-    <td align="left" ><?php echo number_format($payment_int);?></td>	
-    <td align="left" ><?php echo number_format($rate_payment_int,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($rate_totaltopayment_int,2,".",",");?></td>	
-    <td align="left" ><?php echo number_format($int_open);?></td>	
-    <td align="left" ><?php echo number_format($rate_opentototal_int,2,".",",");?></td>	
-    <td align="center" ><?php echo number_format($rate_opentoinvoice_int,2,".",",");?></td>	
+    <td align="left" ><?php echo number_format($int_total);?></td>
+    <td align="left" ><?php echo number_format($rate_int_total,2,".",",");?> </td>
+    <td align="left" ><?php echo number_format($payment_int);?></td>
+    <td align="left" ><?php echo number_format($rate_payment_int,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($rate_totaltopayment_int,2,".",",");?></td>
+    <td align="left" ><?php echo number_format($int_open);?></td>
+    <td align="left" ><?php echo number_format($rate_opentototal_int,2,".",",");?></td>
+    <td align="center" ><?php echo number_format($rate_opentoinvoice_int,2,".",",");?></td>
   </tr>
   <tr>
     <td align="right" valign="middle">بسته ها</td>
-    <td align="left" ><?php echo number_format($costs_total);?></td>	
-    <td align="left" ><?php echo number_format($rate_costs_total,2,".",",");?> </td>	
+    <td align="left" ><?php echo number_format($costs_total);?></td>
+    <td align="left" ><?php echo number_format($rate_costs_total,2,".",",");?> </td>
     <td align="left" ><?php echo number_format($payment_costs);?></td>
     <td align="left" ><?php echo number_format($rate_payment_costs,2,".",",");?></td>
     <td align="left" ><?php echo number_format($rate_totaltopayment_costs,2,".",",");?></td>
@@ -425,7 +426,7 @@ $sum_avg_opentoinvoice=($rate_opentoinvoice_abon+$rate_opentoinvoice_local+$rate
     <td align="left" ><?php echo number_format($rate_opentototal_charity,2,".",",");?></td>
     <td align="center" ><?php echo number_format($rate_opentoinvoice_charity,2,".",",");?></td>
   </tr>
-  
+
   <tr>
 	<td  align="right" valign="middle">جمع کل</td>
     <td align="left" ><?php echo number_format($sum_total);?></td>
@@ -437,7 +438,7 @@ $sum_avg_opentoinvoice=($rate_opentoinvoice_abon+$rate_opentoinvoice_local+$rate
     <td align="left" ><?php echo number_format($sum_opentototal);?></td>
     <td align="center" ><?php echo number_format($sum_avg_opentoinvoice);?></td>
   </tr>
-  
+
   </tbody>
 </table>
 </div>
@@ -447,7 +448,7 @@ $sum_avg_opentoinvoice=($rate_opentoinvoice_abon+$rate_opentoinvoice_local+$rate
 //else
 //{
 //	echo "no record found";
-	
+
 //}
 oci_free_statement($stid);
 oci_close($conn);
